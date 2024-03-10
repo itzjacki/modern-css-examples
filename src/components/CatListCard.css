@@ -1,0 +1,43 @@
+.catList {
+  display: grid;
+  grid-template:
+    "name image" auto
+    "id image" auto
+    "tags image" 1fr /
+    1fr auto;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: #282a3e;
+  /* container-name: catCard;
+  container-type: size; */
+
+  & > img {
+    border-radius: 0.5rem;
+  }
+
+  @container cat-list (max-width: 500px) {
+    /* @media (max-width: 850px) { */
+    grid-template:
+      "image"
+      "name"
+      "id"
+      "tags";
+  }
+}
+
+.listImg {
+  grid-area: image;
+}
+
+.listTags {
+  grid-area: tags;
+  align-self: flex-end;
+}
+
+.name {
+  grid-area: name;
+}
+
+.id {
+  grid-area: id;
+}

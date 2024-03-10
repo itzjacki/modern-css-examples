@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import Cat from "./components/Cat";
+import CatGalleryCard from "./components/CatGalleryCard";
+import CatListCard from "./components/CatListCard";
+import { ResizableBox } from "react-resizable";
 
 interface Cat {
   _id: string;
@@ -14,10 +16,10 @@ export type photoSizes = "xsmall" | "small" | "medium";
 function App() {
   const [cats, setCats] = useState<Cat[]>([]);
   const [numberOfCats, setNumberOfCats] = useState(3);
-  const [isOptionsOpen, setIsOptionsOpen] = useState(true);
   const [includeXSmall, setIncludeXSmall] = useState(false);
   const [includeSmall, setIncludeSmall] = useState(true);
   const [includeMedium, setIncludeMedium] = useState(false);
+  const [isGallery, setIsGallery] = useState(false);
 
   useEffect(() => {
     fetch(`https://cataas.com/api/cats?tags=small&limit=${numberOfCats}`)
@@ -39,10 +41,15 @@ function App() {
 
   return (
     <>
-      <aside className={isOptionsOpen ? "" : "closed"}>
-        <button onClick={() => setIsOptionsOpen(!isOptionsOpen)}>◀︎</button>
+      <ResizableBox
+        width={250}
+        axis='x'
+        handle={<span className='draggable'>↔</span>}
+        className={"options"}
+        minConstraints={[250, 1000]}
+      >
         <div>
-          <h2>Cat options</h2>
+          <h2>Options</h2>
           <fieldset>
             <label htmlFor='numberOfCats'>Number of cats</label>
             <input
@@ -81,13 +88,59 @@ function App() {
               Medium
             </label>
           </fieldset>
+          <fieldset>
+            {/* radio buttons go here */}
+            <label>View mode</label>
+            <label>
+              <input
+                type='radio'
+                name='gallery'
+                checked={!isGallery}
+                onChange={() => setIsGallery(false)}
+              />
+              List
+            </label>
+            <label>
+              <input
+                type='radio'
+                name='gallery'
+                checked={isGallery}
+                onChange={() => setIsGallery(true)}
+              />
+              Gallery
+            </label>
+          </fieldset>
         </div>
-      </aside>
+      </ResizableBox>
       <main>
-        {cats &&
-          cats.map((cat: Cat) => {
-            return <Cat key={cat._id} id={cat._id} size={pickSizeAtRandom()} />;
-          })}
+        {cats && isGallery && (
+          <div className='catContent galleryView'>
+            {cats.map((cat: Cat) => {
+              return (
+                <CatGalleryCard
+                  key={cat._id}
+                  id={cat._id}
+                  size={pickSizeAtRandom()}
+                  tags={cat.tags}
+                />
+              );
+            })}
+          </div>
+        )}
+        {cats && !isGallery && (
+          <div className='catContent listView'>
+            {cats.map((cat: Cat, idx) => {
+              return (
+                <CatListCard
+                  key={cat._id}
+                  id={cat._id}
+                  tags={cat.tags}
+                  idx={idx}
+                />
+              );
+            })}
+          </div>
+        )}
       </main>
     </>
   );
