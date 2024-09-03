@@ -42,79 +42,86 @@ function App() {
   return (
     <>
       <ResizableBox
-        width={250}
-        axis='x'
-        handle={<span className='draggable'>↔</span>}
+        width={275}
+        axis="x"
+        handle={<span className="draggable">↔</span>}
         className={"options"}
-        minConstraints={[250, 1000]}
+        minConstraints={[275, 1000]}
       >
-        <div>
-          <h2>Options</h2>
-          <fieldset>
-            <label htmlFor='numberOfCats'>Number of cats</label>
-            <input
-              type='number'
-              id='numberOfCats'
-              value={numberOfCats}
-              onChange={(e) =>
-                setNumberOfCats(Math.max(parseInt(e.target.value), 1))
-              }
-            />
-          </fieldset>
-          <fieldset>
-            <label>Photo sizes</label>
-            <label>
+        <>
+          <div>
+            <h2>Options</h2>
+            <fieldset>
+              <label htmlFor="numberOfCats">Number of cats</label>
               <input
-                type='checkbox'
-                checked={includeXSmall}
-                onChange={() => setIncludeXSmall(!includeXSmall)}
+                type="number"
+                id="numberOfCats"
+                value={numberOfCats}
+                onChange={(e) =>
+                  setNumberOfCats(Math.max(parseInt(e.target.value), 1))
+                }
               />
-              Extra small
-            </label>
-            <label>
-              <input
-                type='checkbox'
-                checked={includeSmall}
-                onChange={() => setIncludeSmall(!includeSmall)}
-              />
-              Small
-            </label>
-            <label>
-              <input
-                type='checkbox'
-                checked={includeMedium}
-                onChange={() => setIncludeMedium(!includeMedium)}
-              />
-              Medium
-            </label>
-          </fieldset>
-          <fieldset>
-            {/* radio buttons go here */}
-            <label>View mode</label>
-            <label>
-              <input
-                type='radio'
-                name='gallery'
-                checked={!isGallery}
-                onChange={() => setIsGallery(false)}
-              />
-              List
-            </label>
-            <label>
-              <input
-                type='radio'
-                name='gallery'
-                checked={isGallery}
-                onChange={() => setIsGallery(true)}
-              />
-              Gallery
-            </label>
-          </fieldset>
-        </div>
+            </fieldset>
+            <fieldset>
+              <label>Photo sizes</label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={includeXSmall}
+                  onChange={() => setIncludeXSmall(!includeXSmall)}
+                />
+                Extra small
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={includeSmall}
+                  onChange={() => setIncludeSmall(!includeSmall)}
+                />
+                Small
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={includeMedium}
+                  onChange={() => setIncludeMedium(!includeMedium)}
+                />
+                Medium
+              </label>
+            </fieldset>
+            <fieldset>
+              {/* radio buttons go here */}
+              <label>View mode</label>
+              <label>
+                <input
+                  type="radio"
+                  name="gallery"
+                  checked={!isGallery}
+                  onChange={() => setIsGallery(false)}
+                />
+                List
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="gallery"
+                  checked={isGallery}
+                  onChange={() => setIsGallery(true)}
+                />
+                Gallery
+              </label>
+            </fieldset>
+          </div>
+          <div className="expander"></div>
+          <div className="navigation">
+            <a href="enterprise">Enterprise cat solutions →</a>
+            <a href="caas">About →</a>
+          </div>
+        </>
       </ResizableBox>
       <main>
         {cats && isGallery && (
-          <div className='catContent galleryView'>
+          <div className="catContent galleryView">
             {cats.map((cat: Cat) => {
               return (
                 <CatGalleryCard
@@ -128,7 +135,7 @@ function App() {
           </div>
         )}
         {cats && !isGallery && (
-          <div className='catContent listView'>
+          <div className="catContent listView">
             {cats.map((cat: Cat, idx) => {
               return (
                 <CatListCard
