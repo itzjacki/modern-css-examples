@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>⚓-positioning</title>
+    <link rel="stylesheet" href="anchors.css" />
+  </head>
+  <body>
+    <div class="select">
+      <span>No option selected</span>
+      <span class="caret">▼</span>
+    </div>
+    <div class="dropdown closed">
+      <div>Presidentveita</div>
+      <div>Holstveita</div>
+      <div>Drillveita</div>
+      <div>Brattørveita</div>
+      <div>Apotekerveita</div>
+    </div>
+
+    <!-- <select class="center">
+      <option value="">No option selected</option>
+      <option value="presidentveita">Presidentveita</option>
+      <option value="holstveita">Holstveita</option>
+      <option value="drillveita">Drillveita</option>
+      <option value="brattørveita">Brattørveita</option>
+      <option value="apotekerveita">Apotekerveita</option>
+    </select> -->
+
+    <script>
+      var select = document.querySelector(".select");
+      var dropdown = document.querySelector(".dropdown");
+
+      select.addEventListener("click", function () {
+        dropdown.classList.toggle("closed");
+        select.classList.toggle("closed");
+      });
+
+      dropdown.addEventListener("click", function (event) {
+        if (event.target.tagName === "DIV") {
+          select.querySelector("span").textContent = event.target.textContent;
+          dropdown.classList.add("closed");
+          select.classList.add("closed");
+        }
+      });
+    </script>
+  </body>
+</html>
